@@ -31,11 +31,9 @@ def calc_num_position(replay_data):
     waiting = 100 - (p_stats["percent_most_forward"] + p_stats["percent_most_back"])
     defender = p_stats["percent_most_back"]
 
-
-
-    results['1st Man'] = (in_off + attacker)/factor_amount
-    results["2nd Man"] = (in_mid + waiting)/factor_amount
-    results["3rd Man"] = (in_def + defender)/factor_amount
+    results['1st Man'] = (attacker)/100
+    results["2nd Man"] = (waiting)/100
+    results["3rd Man"] = (defender)/100
     return results
 
 def calc_stiker_value(replay_data, team, full_data):
@@ -107,5 +105,3 @@ def calculate_playstyles(replay_data):
             }
 
     return player_playstyles
-
-print(calculate_playstyles(get_replay_data(sample_replay)))
