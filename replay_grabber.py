@@ -22,8 +22,14 @@ def clean_replay_data(replay_dict):
     cleaned_dict = {}
     cleaned_dict['blue'] = replay_dict['blue']
     cleaned_dict['orange'] = replay_dict['orange']
-    return cleaned_dict
+    return cleaned_dict, replay_dict
 
 # get replay information for playstyle calculations
 def get_replay_data(replay_id):
-    return clean_replay_data(get_replay(replay_id))
+    data = clean_replay_data(get_replay(replay_id))
+    full_data = data[1]
+    return data, full_data
+
+def get_replay_title(replay_id):
+    replay = get_replay(replay_id)
+    print(replay)

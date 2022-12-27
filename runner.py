@@ -1,14 +1,15 @@
 from playstyle_calculations import calculate_playstyles
-from replay_grabber import get_replay_data
-from Information import sample_replay
+from replay_grabber import get_replay_data, get_replay_title
+from Information import sample_replay, replays
+from graph_display import generate_multi_chart
 
-def final_values(player):
-    raw_values = calculate_playstyles(get_replay_data(sample_replay))
-    print(raw_values)
-    data_values = []
-    data_names = []
-    for i in raw_values[player]['Stats']:
-        data_values.append(raw_values[player]['Stats'][i])
-        data_names.append(i)
+def graph_all(replay):
+    data = get_replay_data(replay)
+    all_data = data[1]
+    calc_data = data[0]
+    print(all_data)
+    playstyle_vals = calculate_playstyles(all_data)
+    print(playstyle_vals)
+    generate_multi_chart(playstyle_vals, graphs_title=all_data["title"])
 
-    return data_values, data_names
+graph_all(replays[2])

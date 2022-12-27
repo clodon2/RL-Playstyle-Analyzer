@@ -1,7 +1,6 @@
 from replay_grabber import get_replay_data
 from Information import cluster_template, cluster_max_values, sample_replay
 
-print(get_replay_data(sample_replay))
 
 def get_team_average(category, value, team, replay_data):
     average = 0
@@ -65,43 +64,41 @@ def calc_anchor_value(replay_data, team, full_data):
     return total / factor_amount
 
 def calculate_playstyles(replay_data):
-    player_playstyles = {}
+    player_playstyles = []
 
     # Blue team calulcations
+    blue_list = []
     for i in replay_data['blue']['players']:
         # calculation
+        print(i['name'])
         man_results = calc_num_position(i)
         strike_results = calc_stiker_value(i, 'blue', replay_data)
         anchor_results = calc_anchor_value(i, 'blue', replay_data)
 
-        # sets
-        player_playstyles[i["name"]] = {
-            "Team": "Blue",
-            "Stats": {
-                "Anchor": anchor_results,
-                "Striker": strike_results,
-                "1st Man": man_results["1st Man"],
-                "2nd Man": man_results["2nd Man"],
-                "3rd Man": man_results["3rd Man"]
-            }
-        }
+        p_stats = [man_results["1st Man"], man_results["2nd Man"], man_results["3rd Man"],
+                   anchor_results, strike_results]
+
+        blue_list.append((i["name"], p_stats))
+
+    player_playstyles.append(blue_list)
+
+    print()
 
     # Orange team calulcations
-        for i in replay_data['orange']['players']:
-            man_results = calc_num_position(i)
-            strike_results = calc_stiker_value(i, 'orange', replay_data)
-            anchor_results = calc_anchor_value(i, 'orange', replay_data)
+    orange_list = []
+    for i in replay_data['orange']['players']:
+        print(i['name'])
+        man_results = calc_num_position(i)
+        strike_results = calc_stiker_value(i, 'orange', replay_data)
+        anchor_results = calc_anchor_value(i, 'orange', replay_data)
 
-            # sets
-            player_playstyles[i["name"]] = {
-                "Team":"Orange",
-                "Stats":{
-                    "Anchor": anchor_results,
-                    "Striker": strike_results,
-                    "1st Man": man_results["1st Man"],
-                    "2nd Man": man_results["2nd Man"],
-                    "3rd Man": man_results["3rd Man"]
-                }
-            }
+        p_stats = [man_results["1st Man"], man_results["2nd Man"], man_results["3rd Man"],
+                       anchor_results, strike_results]
+
+        orange_list.append((i["name"], p_stats))
+
+    player_playstyles.append(orange_list)
+
+    print(blue_list, orange_list)
 
     return player_playstyles
